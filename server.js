@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const dateTime = require('simple-datetime-formater');
 const bodyParser = require('body-parser');
+const chatRouter = require('./routes/chatroute');
 
 
 //require the http module
@@ -13,14 +14,17 @@ const io = require('socket.io');
 
 const port = 5000;
 
+//bodyparser middleware
 app.use(bodyParser.json());
 
 //routes
+app.use('/chat', chatRouter);
+app.use('/login', loginRouter);
 
 //express.static middleware
 app.use(express.static(__dirname + '/public'));
 
-
+//integrating socketio
 const socket = io(http);
 
 //database connection
